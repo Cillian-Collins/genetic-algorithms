@@ -1,9 +1,10 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 TARGET_STRING = np.array([1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0])
 
 def fitness(individual):
-    return -sum(np.abs(TARGET_STRING - individual))
+    return np.sum(TARGET_STRING == individual)
 
 def population_fitness(population):
     return np.mean([fitness(individual) for individual in population])
@@ -21,6 +22,7 @@ def crossover(parent1, parent2):
 
 if __name__ == '__main__':
     population = np.random.randint(2, size=(100,30))
+    generational_fitness = [population_fitness(population)]
     print(f"Fitness at generation 0: {population_fitness(population)}")
 
     for generation in range(50):
@@ -37,4 +39,10 @@ if __name__ == '__main__':
             offspring.extend([child1, child2])
 
         population = np.array(offspring)
+        generational_fitness.append(population_fitness(population))
         print(f"Fitness at generation {generation+1}: {population_fitness(population)}")
+    plt.plot(range(51), generational_fitness, marker="o")
+    plt.title("Fitness by Generation")
+    plt.xlabel("Generation")
+    plt.ylabel("Mean Population Fitness")
+    plt.show()
