@@ -3,7 +3,12 @@ import numpy as np
 
 def fitness(individual):
     individual_fitness = sum(individual)
-    return individual_fitness if individual_fitness != 0 else 2*len(individual)
+    if individual_fitness != 0:
+        return individual_fitness
+    ret = 2*len(individual)
+    print(ret)
+    input("continue?")
+    return ret
 
 def population_fitness(population):
     return np.mean([fitness(individual) for individual in population])
@@ -24,10 +29,10 @@ if __name__ == '__main__':
     generational_fitness = [population_fitness(population)]
     print(f"Fitness at generation 0: {population_fitness(population)}")
 
-    for generation in range(50):
+    for generation in range(1000):
         fitness_score = np.array([fitness(individual) for individual in population])
         indices = np.argsort(fitness_score)[::-1]
-        fittest = population[indices[:50]]
+        fittest = population[indices[:len(population)//2]]
 
         offspring = []
         for i in range(len(fittest)):
@@ -40,7 +45,7 @@ if __name__ == '__main__':
         population = np.array(offspring)
         generational_fitness.append(population_fitness(population))
         print(f"Fitness at generation {generation+1}: {population_fitness(population)}")
-    plt.plot(range(51), generational_fitness, marker="o")
+    plt.plot(range(1001), generational_fitness, marker="o")
     plt.title("Fitness by Generation")
     plt.xlabel("Generation")
     plt.ylabel("Mean Population Fitness")
