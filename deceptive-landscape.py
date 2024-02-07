@@ -6,8 +6,6 @@ def fitness(individual):
     if individual_fitness != 0:
         return individual_fitness
     ret = 2*len(individual)
-    print(ret)
-    input("continue?")
     return ret
 
 def population_fitness(population):

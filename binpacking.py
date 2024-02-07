@@ -102,7 +102,7 @@ def genetic_algorithm_binpacking():
 
 if __name__ == '__main__':
     global ITEMS, BIN_CAPACITY, NUM_ITEMS
-    for i in range(3,6):
+    for i in range(1,6):
         content = open(f"binpacking_tests/sample{i}.txt").read().split("\n")
         BIN_CAPACITY = int(content[2])
         ITEMS = []
